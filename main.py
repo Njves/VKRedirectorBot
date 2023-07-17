@@ -54,5 +54,5 @@ async def create_item(query: str):
     if event.type == 'confirmation':
         return PlainTextResponse(TOKEN_CONF_VK)
     if event.type == 'wall_post_new':
-            print(event.object)
-            return PlainTextResponse('ok')
+        print(event.object)
+        return PlainTextResponse('ok')
