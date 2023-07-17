@@ -51,9 +51,8 @@ app = FastAPI()
 @app.post("/")
 async def create_item(query: str):
     event: Event = Event.parse_raw(query)
-    match event.type:
-        case 'confirmation':
-            return PlainTextResponse(TOKEN_CONF_VK)
-        case 'wall_post_new':
+    if event.type == 'confirmation':
+        return PlainTextResponse(TOKEN_CONF_VK)
+    if event.type == 'wall_post_new':
             print(event.object)
             return PlainTextResponse('ok')
