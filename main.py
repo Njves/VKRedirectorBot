@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from config import TOKEN_VK, TOKEN_CONF_VK
@@ -34,7 +36,7 @@ class Post(BaseModel):
     id: str
     date: datetime
     text: str
-    attachments: list[Attachment]
+    attachments: List[Attachment]
 
 
 class Event(BaseModel):
