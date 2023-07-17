@@ -9,12 +9,9 @@ class Confirmation(BaseModel):
 
 app = FastAPI()
 
-#
-# @app.post("/conf")
-# async def create_item(confirmation: Confirmation):
-#     return '0fc10f4c'
 
-@app.get("/conf", response_class=PlainTextResponse)
-async def create_item():
+@app.post("/conf")
+async def create_item(confirmation: Confirmation):
     return '0fc10f4c'
+
 
