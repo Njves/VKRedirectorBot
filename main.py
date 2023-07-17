@@ -1,51 +1,6 @@
-from typing import List
-
 from fastapi import FastAPI, Response, Request
-from pydantic import BaseModel
-from config import TOKEN_VK, TOKEN_CONF_VK
-from datetime import datetime
-from fastapi.responses import PlainTextResponse
-
-
-class Confirmation(BaseModel):
-    type: str
-    group_id: int
-
-
-class Photo(BaseModel):
-    id: str
-    type: str
-    photo_130: str
-    photo_604: str
-
-
-class Video(BaseModel):
-    id: str
-    title: str
-    description: str
-    duration: int
-    player: str
-
-
-class Attachment(BaseModel):
-    type: str
-    photo: Photo
-
-
-class Post(BaseModel):
-    id: str
-    date: datetime
-    text: str
-    attachments: List[Attachment]
-
-
-class Event(BaseModel):
-    type: str = ''
-    event_id: str = ''
-    v: float = 0
-    group_id: str = ''
-    object: Post = None
-
+from config import TOKEN_CONF_VK
+from telegram import BotMessage
 
 app = FastAPI()
 
@@ -63,6 +18,11 @@ async def vk_handler(req: Request):
         return Response(TOKEN_CONF_VK)
 
     if data["type"] == 'wall_post_new':
-        print(data)
+        message = BotMessage()
+        for attachment in data['object']['attachments']:
+            if attachment['type'] == 'photo':
+                message.add_media(attachment['photo']['photo_1280'])
+        message.push()
         return Response('ok')
     return Response("ok")
+
