@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-
+from fastapi.responses import PlainTextResponse
 
 class Confirmation(BaseModel):
     type: str
@@ -9,12 +9,12 @@ class Confirmation(BaseModel):
 
 app = FastAPI()
 
+#
+# @app.post("/conf")
+# async def create_item(confirmation: Confirmation):
+#     return '0fc10f4c'
 
-@app.post("/conf")
-async def create_item(confirmation: Confirmation):
+@app.get("/conf", response_class=PlainTextResponse)
+async def create_item():
     return '0fc10f4c'
 
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app)
