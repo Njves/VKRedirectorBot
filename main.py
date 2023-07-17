@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, Request
 from pydantic import BaseModel
 from config import TOKEN_VK, TOKEN_CONF_VK
 from datetime import datetime
@@ -15,8 +15,8 @@ class Confirmation(BaseModel):
 class Photo(BaseModel):
     id: str
     type: str
-    small_photo: str
-    big_photo: str
+    photo_130: str
+    photo_604: str
 
 
 class Video(BaseModel):
@@ -51,9 +51,18 @@ app = FastAPI()
 
 
 @app.post("/")
-async def create_item(event: Event):
-    if event.type == 'confirmation':
-        return PlainTextResponse(TOKEN_CONF_VK)
-    if event.type == 'wall_post_new':
-        print(event.object)
+async def vk_handler(req: Request):
+    try:
+        data = await req.json()
+    except Exception:
+        print("Empty request")
+        return Response("not today", status_code=403)
+
+    if data["type"] == "confirmation":
+        print("Send confirmation token: {}", TOKEN_CONF_VK)
+        return Response(TOKEN_CONF_VK)
+
+    if data["type"] == 'wall_post_new':
+        print(data)
         return Response('ok')
+    return Response("ok")
