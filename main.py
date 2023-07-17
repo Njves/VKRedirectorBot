@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from config import TOKEN_VK, TOKEN_CONF_VK
 from datetime import datetime
@@ -51,8 +51,7 @@ app = FastAPI()
 
 
 @app.post("/")
-async def create_item(query: str):
-    event: Event = Event.parse_raw(query)
+async def create_item(event: Event):
     if event.type == 'confirmation':
         return PlainTextResponse(TOKEN_CONF_VK)
     if event.type == 'wall_post_new':
