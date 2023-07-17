@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Response
 from pydantic import BaseModel
 from config import TOKEN_VK, TOKEN_CONF_VK
 from datetime import datetime
@@ -56,4 +56,4 @@ async def create_item(event: Event):
         return PlainTextResponse(TOKEN_CONF_VK)
     if event.type == 'wall_post_new':
         print(event.object)
-        return PlainTextResponse('ok')
+        return Response('ok')
