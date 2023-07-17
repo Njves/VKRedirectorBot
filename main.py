@@ -20,11 +20,10 @@ async def vk_handler(req: Request):
     if data["type"] == "wall_post_new":
         message = BotMessage()
         for attachment in data["object"]["attachments"]:
-            if attachment["type"] == "photo":
+            if attachment['type'] == "photo":
                 for size in attachment["photo"]["sizes"]:
-                    if size == 'x':
-                        message.add_media(size)
-        print(message.media)
+                    if size['type'] == 'x':
+                        message.add_media(size['url'], caption=data['object']['text'])
         message.push()
         return Response("ok")
     return Response("ok")
