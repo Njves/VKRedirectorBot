@@ -17,13 +17,15 @@ async def vk_handler(req: Request):
         print("Send confirmation token: {}", TOKEN_CONF_VK)
         return Response(TOKEN_CONF_VK)
 
-    if data["type"] == 'wall_post_new':
+    if data["type"] == "wall_post_new":
         print(data)
         message = BotMessage()
-        for attachment in data['object']['attachments']:
-            if attachment['type'] == 'photo':
-                message.add_media(attachment['photo']['photo_1280'])
+        for attachment in data["object"]["attachments"]:
+            if attachment["type"] == "photo":
+                for size in attachment["photo"]["sizes"]:
+                    if size == 'x':
+                        message.add_media(size)
         message.push()
-        return Response('ok')
+        return Response("ok")
     return Response("ok")
 

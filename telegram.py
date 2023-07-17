@@ -3,7 +3,7 @@ from telebot.types import InputMediaPhoto
 from config import TOKEN_TG
 
 bot = telebot.TeleBot(TOKEN_TG)
-chat_id = '@iwced'
+chat_id = "@iwced"
 
 
 class BotMessage:
