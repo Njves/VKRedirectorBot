@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from config import TOKEN_VK, TOKEN_CONF_VK
 from datetime import datetime
+from fastapi.responses import PlainTextResponse
 
 
 class Confirmation(BaseModel):
@@ -24,7 +25,7 @@ class Video(BaseModel):
     player: str
 
 
-class Attachment:
+class Attachment(BaseModel):
     type: str
     photo: Photo
 
@@ -52,6 +53,7 @@ async def create_item(query: str):
     event: Event = Event.parse_raw(query)
     match event.type:
         case 'confirmation':
-            return TOKEN_CONF_VK
+            return PlainTextResponse(TOKEN_CONF_VK)
         case 'wall_post_new':
             print(event.object)
+            return PlainTextResponse('ok')
