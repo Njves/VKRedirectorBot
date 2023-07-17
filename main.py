@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from fastapi import Query
-from typing import Annotated
 
 
 class Confirmation(BaseModel):
