@@ -25,6 +25,7 @@ async def vk_handler(req: Request):
                 for size in attachment["photo"]["sizes"]:
                     if size == 'x':
                         message.add_media(size)
+        print(message.media)
         message.push()
         return Response("ok")
     return Response("ok")
