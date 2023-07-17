@@ -18,6 +18,7 @@ async def vk_handler(req: Request):
         return Response(TOKEN_CONF_VK)
 
     if data["type"] == 'wall_post_new':
+        print(data)
         message = BotMessage()
         for attachment in data['object']['attachments']:
             if attachment['type'] == 'photo':
