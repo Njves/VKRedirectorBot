@@ -40,11 +40,11 @@ class Post(BaseModel):
 
 
 class Event(BaseModel):
-    type: str
-    event_id: str
-    v: float
-    group_id: str
-    object: Post
+    type: str = ''
+    event_id: str = ''
+    v: float = 0
+    group_id: str = ''
+    object: Post = None
 
 
 app = FastAPI()
