@@ -1,3 +1,6 @@
+"""
+Module that implements VK Callback API
+"""
 from fastapi import FastAPI, Response, Request
 from config import TOKEN_CONF_VK
 from telegram import BotMessage
@@ -7,6 +10,11 @@ app = FastAPI()
 
 @app.post("/")
 async def vk_handler(req: Request):
+    """
+    To handle VK request, parsing and execute bot or confirmation
+    :param req: vk request
+    :return: response ok or confirmation code
+    """
     try:
         data = await req.json()
     except Exception:
